@@ -39,22 +39,22 @@ function ui_selectRace:init()
     
   -- Boutons du choix des niveaux
   self.frame_levels = ui.newFrame(0, h-120, w, 120)
-    self.frame_levels:setBackgroundColor(47, 72, 78)
+    self.frame_levels:setBackgroundColor(0.18, 0.28, 0.3)
   self.btn_lvl1 = ui.newButton(0, 0, 40, 40, "1", font_low)
-    self.btn_lvl1:setBackgroundColor(77, 125, 125)
+    self.btn_lvl1:setBackgroundColor(0.3, 0.49, 0.49)
     
     self.btn_lvl1:setEvent("pressed", level1)
   self.btn_lvl2 = ui.newButton(0, 0, 40, 40, "2", font_low)
-    self.btn_lvl2:setBackgroundColor(77, 125, 125)
+    self.btn_lvl2:setBackgroundColor(0.3, 0.49, 0.49)
     self.btn_lvl2:setEvent("pressed", level2)
   self.btn_lvl3 = ui.newButton(0, 0, 40, 40, "3", font_low)
-    self.btn_lvl3:setBackgroundColor(77, 125, 125)
+    self.btn_lvl3:setBackgroundColor(0.3, 0.49, 0.49)
     self.btn_lvl3:setEvent("pressed", level3)
   self.btn_lvl4 = ui.newButton(0, 0, 40, 40, "4", font_low)
-    self.btn_lvl4:setBackgroundColor(77, 125, 125)
+    self.btn_lvl4:setBackgroundColor(0.3, 0.49, 0.49)
     self.btn_lvl4:setEvent("pressed", level4)
   self.btn_lvl5 = ui.newButton(0, 0, 40, 40, "5", font_low)
-    self.btn_lvl5:setBackgroundColor(77, 125, 125)
+    self.btn_lvl5:setBackgroundColor(0.3, 0.49, 0.49)
     self.btn_lvl5:setEvent("pressed", level5)
     
   self.frame_levels:addElement(10, 10, self.btn_lvl1)
@@ -84,9 +84,9 @@ end
 function ui_selectRace:update(dt)
   self.btn_back:update(dt)
   if map.level.lock then 
-    self.btn_upgrade:setBackgroundColor(100, 50, 50)
+    self.btn_upgrade:setBackgroundColor(0.39, 0.19, 0.19)
   else 
-    self.btn_upgrade:setBackgroundColor(100, 100, 100)
+    self.btn_upgrade:setBackgroundColor(0.39, 0.39, 0.39)
     self.btn_upgrade:update(dt) 
   end
   self.frame_levels:update(dt)

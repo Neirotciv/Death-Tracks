@@ -11,7 +11,7 @@ local function newRace() game.menu_state = "RACE_MENU" ui_upgrade:init() newGame
 
 function ui_menu:init()
   self.frame_mainMenu = ui.newFrame(0, 0, w, h)
-    self.frame_mainMenu:setBackgroundColor(27, 38, 50, 255)
+    self.frame_mainMenu:setBackgroundColor(0.1, 0.15, 0.19, 1)
   
   self.btn_newRace = ui.newButton(w/2-100, h/2-95, 200, 50, "NEW RACE", font)
     self.btn_newRace:setEvent("pressed", newRace)
@@ -28,13 +28,13 @@ function ui_menu:init()
   self.frame_mainMenu:addElement(w/2-100, self.btn_options.y + 70, self.btn_quit)
     
   self.frame_optionsMenu = ui.newFrame(0, 0, w, h)
-    self.frame_optionsMenu:setBackgroundColor(27, 38, 50, 255)
+    self.frame_optionsMenu:setBackgroundColor(0.1, 0.15, 0.19, 1)
     
   self.frame_raceMenu = ui.newFrame(0, 0, w, h)
-    self.frame_raceMenu:setBackgroundColor(27, 38, 50, 255)
+    self.frame_raceMenu:setBackgroundColor(0.1, 0.15, 0.19, 1)
     
   self.frame_upgradeMenu = ui.newFrame(0, 0, w, h)
-    self.frame_upgradeMenu:setBackgroundColor(27, 38, 50, 255)
+    self.frame_upgradeMenu:setBackgroundColor(0.1, 0.15, 0.19, 1)
     
   ui_selectRace:init()
   ui_upgrade:init()

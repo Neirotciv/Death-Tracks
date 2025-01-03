@@ -52,7 +52,7 @@ end
 function ui_race:draw()
   -- Compte à rebours
   if self.countdownEnd == false then
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.draw(self.countdownImage[self.currentImage], w/2, h/2, 0, 10, 10, 8, 8)
     love.graphics.print(self.countdown, 10, 10)
   end

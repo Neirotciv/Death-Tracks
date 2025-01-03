@@ -145,9 +145,9 @@ function ui_upgrade:draw()
   -- Image du tank et de la bar de vie
   love.graphics.draw(self.img_tank.image, self.img_tank.sprite[math.floor(self.img_tank.current)], self.img_tank.x, self.img_tank.y, 0, tankScale, tankScale)
   love.graphics.draw(self.img_turret.image, self.img_turret.sprite[1], self.img_tank.x, self.img_tank.y, 0, tankScale, tankScale)
-  love.graphics.setColor(99, 183, 223)
+  love.graphics.setColor(0.39, 0.71, 0.87)
   love.graphics.rectangle("fill", self.lifeBar.x, self.lifeBar.y, self.lifeBar.progress, self.lifeBar.height)
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(1, 1, 1)
   love.graphics.rectangle("line", self.lifeBar.x, self.lifeBar.y, self.lifeBar.width, self.lifeBar.height)
   
   love.graphics.draw(self.upgrade[game.lvl_shield], 400, 100, 0, 3, 3)

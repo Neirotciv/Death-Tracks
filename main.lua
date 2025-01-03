@@ -85,7 +85,7 @@ function love.draw()
   
   -- Affichage des UIs en dehors de la caméra
   if game.state == "PLAY" then
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     ui_tank:drawInfo()
     time:draw()
     love.graphics.print("fps "..love.timer.getFPS(), w - 50, 5)

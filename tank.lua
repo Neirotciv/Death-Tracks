@@ -665,24 +665,24 @@ function tank.newTank(pX, pY, pID)
     -- Affichage des capteurs
     if debug then
       if self.collide then
-        love.graphics.setColor(255, 0, 0)
+        love.graphics.setColor(1, 0, 0)
         love.graphics.circle("line", self.x, self.y, 14)
       else
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.circle("line", self.x, self.y, 16)
       end
       
       for i=1, #self.sensors do
         if self.sensors[i].collide then
-          love.graphics.setColor(255, 0, 0)
+          love.graphics.setColor(1, 0, 0)
           love.graphics.circle("fill", self.sensors[i].x, self.sensors[i].y, 4)
         else
-          love.graphics.setColor(255, 255, 255)
+          love.graphics.setColor(1, 1, 1)
           love.graphics.circle("line", self.sensors[i].x, self.sensors[i].y, 4)
         end
       end
       
-      love.graphics.setColor(255, 255, 255)
+      love.graphics.setColor(1, 1, 1)
     end
   end
   
@@ -692,7 +692,7 @@ function tank.newTank(pX, pY, pID)
     for l=1, #self.mapCopy do
       for c=1, #self.mapCopy[1] do
         if self.mapCopy[l][c] == 10 then
-          love.graphics.setColor(255, 255, 255, 100)
+          love.graphics.setColor(1, 1, 1, 0.4)
           love.graphics.rectangle("fill", x, y, map.tileSize, map.tileSize)
         end
         x = x + map.tileSize
@@ -703,7 +703,7 @@ function tank.newTank(pX, pY, pID)
   end
   
   function tank:drawDebug()
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.print("front : "..tostring(self.sensors[1].collide), 10, 30)
     love.graphics.print("left : "..tostring(self.sensors[2].collide), 10, 50)
     love.graphics.print("right : "..tostring(self.sensors[3].collide), 10, 70)

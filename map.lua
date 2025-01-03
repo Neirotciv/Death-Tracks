@@ -244,17 +244,17 @@ function map.draw()
   for l=1, 20 do
     for c=1, 20 do
       if map.level[l][c] == 0 then -- Zone non roulable
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.rectangle("line", x, y, map.tileSize, map.tileSize)
         --love.graphics.draw(tile.concrete, x, y)
       elseif map.level[l][c] == 1 then -- Route / chemin
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(tile.dirt, x, y)
       elseif map.level[l][c] == 2 then -- Ligne de départ / arrivée
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(tile.start, x, y)
       elseif map.level[l][c] == 4 then -- Checkpoint à placer au milieu de la course, comptabilise les tours
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(tile.dirt, x, y)
       end
       x = x + map.tileSize
@@ -264,7 +264,7 @@ function map.draw()
   end
   
   if debug then
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.circle("line", map.centerX, map.centerY, map.width * map.tileSize / 2)
     love.graphics.print(map.cameraX, 10, 10)
     love.graphics.print(map.cameraY, 10, 30)
@@ -281,17 +281,17 @@ function map.drawMin(pX, pY)
       if map.level[l][c] == 0 then
         love.graphics.setColor(0, 0, 0)
         love.graphics.rectangle("fill", x, y, map.tileSize/5, map.tileSize/5)
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.rectangle("line", x, y, map.tileSize/5, map.tileSize/5)
         --love.graphics.draw(tile.concrete, x, y)
       elseif map.level[l][c] == 1 then
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(tile.dirt, x, y, 0, 0.2, 0.2)
       elseif map.level[l][c] == 2 then
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(tile.start, x, y, 0, 0.2, 0.2)
       elseif map.level[l][c] == 4 then -- Checkpoint à placer au milieu de la course, comptabilise les tours
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(tile.dirt, x, y, 0, 0.2, 0.2)
       end
       x = x + map.tileSize/5

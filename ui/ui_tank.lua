@@ -45,16 +45,16 @@ function ui_tank:updateInfos(pPlayer)
 end
 
 function ui_tank:drawInfo()
-  love.graphics.setColor(100, 100, 100)
+  love.graphics.setColor(0.39, 0.39, 0.39)
   love.graphics.rectangle("fill", ui_tank.x, ui_tank.y, ui_tank.width, ui_tank.height)
-  love.graphics.setColor(10, 10, 10)
+  love.graphics.setColor(0.04, 0.04, 0.04)
   love.graphics.print("speed : "..ui_tank.speed, ui_tank.x + 10, ui_tank.y + 5)
   love.graphics.print("life : "..ui_tank.life, ui_tank.x + 100, ui_tank.y + 5)
   love.graphics.print("ammo : "..ui_tank.ammo, ui_tank.x + 190, ui_tank.y + 5)
   love.graphics.print("weapon : "..ui_tank.currentWeapon, ui_tank.x + 280, ui_tank.y + 5)
   love.graphics.print("wallet : "..ui_tank.money, ui_tank.x + 370, ui_tank.y + 5)
   love.graphics.print("laps : "..ui_tank.lap.." / "..map.level.maxLaps, ui_tank.x + 460, ui_tank.y + 5)
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(1, 1, 1)
   
   -- Icône du bonus
   --self.currentIcon:draw()

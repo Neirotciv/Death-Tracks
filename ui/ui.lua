@@ -38,8 +38,8 @@ function ui.newPanel(pX, pY, pW, pH)
     panel.width = pW
     panel.height = pH
     panel.image = nil
-    panel.backGroundColor = { 255, 255, 255, 255 }
-    panel.outlineColor = { 255, 255, 255, 255 }
+    panel.backGroundColor = { 1, 1, 1, 1 }
+    panel.outlineColor = { 1, 1, 1, 1 }
     panel.borderRadius = 0
     panel.borderLineWidth = 1
     panel.scale = 1
@@ -206,8 +206,8 @@ function ui.newToolBar(pX, pY, pAlignment)
     toolBar.borderRadius = 0
     toolBar.scale = 1
     toolBar.borderLineWidth = 1
-    toolBar.backGroundColor = {250, 250, 250, 255}
-    toolBar.outlineColor = {255, 255, 255, 255}
+    toolBar.backGroundColor = {0.98, 0.98, 0.98, 1}
+    toolBar.outlineColor = {1, 1, 1, 1}
     toolBar.icons = {}
     toolBar.margin = {}
       toolBar.margin.top = 5
@@ -407,7 +407,7 @@ function ui.newIcon(pX, pY, pImage, pScale)
   end
   
   function icon:draw()
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     
     -- Image par défaut si elle n'est pas survolée
     if self.hover == false then
@@ -419,9 +419,9 @@ function ui.newIcon(pX, pY, pImage, pScale)
         love.graphics.draw(self.imageHover, self.x, self.y, 0, self.scale, self.scale)
       else
         -- Si l'image survolé n'existe pas, on affiche un cadre autour
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(self.imageDefault, self.x, self.y, 0, self.scale, self.scale)
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
       end
     end
@@ -462,7 +462,7 @@ function ui.newLabel(pX, pY, pW, pH, pText, pFont, pHAlign, pVAlign)
   end
   
   function label:drawText()
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(self.font)
     local x = self.x
     local y = self.y
@@ -503,7 +503,7 @@ function ui.newButton(pX, pY, pWidth, pHeight, pText, pFont)
     button.oldButtonState = false
     button.lastEvent = {}
     
-    button:setBackgroundColor(100, 100, 100, 255)
+    button:setBackgroundColor(0.39, 0.39, 0.39, 1)
     button:setBorderRadius(5)
     button:setBorderLineWidth(2)
       
@@ -541,7 +541,7 @@ function ui.newButton(pX, pY, pWidth, pHeight, pText, pFont)
     if self.pressed then
       if self.imgPressed == nil then
         self:drawPanel()
-        love.graphics.setColor(255, 255, 255, 0)
+        love.graphics.setColor(1, 1, 1, 0)
         love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
       else
         love.graphics.draw(self.imgPressed, self.x, self.y, 0, self.scale, self.scale)
@@ -549,7 +549,7 @@ function ui.newButton(pX, pY, pWidth, pHeight, pText, pFont)
     elseif self.hover then
       if self.imgHover == nil then
         self:drawPanel()
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(1, 1, 1)
         love.graphics.rectangle("line", self.x-2, self.y-2, self.width+4, self.height+4)
       else
         love.graphics.draw(self.imgHover, self.x, self.y, 0, self.scale, self.scale)
@@ -633,7 +633,7 @@ function ui.newCheckbox(pX, pY, pWidth, pHeight, pPressed)
     if self.pressed then
       if self.imgPressed == nil then
         self:drawPanel()
-        love.graphics.setColor(255, 255, 255, 50)
+        love.graphics.setColor(1, 1, 1, 0.19)
         love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
       else
         love.graphics.draw(self.imgPressed, self.x, self.y, 0, self.scale, self.scale)
@@ -785,7 +785,7 @@ function ui.newSlider(pX, pY, pWidth, pScale, pLabel)
   function slider:draw()
     local widthScale = self.width / (self.imageWidth / self.scale)
     --self.cursor.xo = (self.bar.x - self.cursor.width / 2) + (self.value.current * (self.width / self.value.max)) -- MODIFIER ÇA
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.draw(self.leftSide.image, self.x, self.y, 0, self.scale, self.scale)
     love.graphics.draw(self.bar.image, self.bar.x, self.y, 0, widthScale, self.scale)
     love.graphics.draw(self.rightSide.image, self.rightSide.x, self.y, 0, self.scale, self.scale)
