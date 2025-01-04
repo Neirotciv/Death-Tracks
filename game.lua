@@ -28,7 +28,7 @@ game.price_repair = 0
 game.price_damage = 10
 
 game.state = "MENU" -- MENU, PLAY ou PAUSE
-game.menu_state = "MAIN_MENU"
+game.menu_state = "MAIN_MENU" -- MAIN_MENU, RACE_MENU, UPGRADE_MENU
 
 game.race_state = "START" -- START, IN_PROGRESS ou END
 

@@ -7,7 +7,11 @@ local currentMenu = "MAIN_MENU"
 local pause = false
 
 local function quit() love.event.quit(true) end
-local function newRace() game.menu_state = "RACE_MENU" ui_upgrade:init() newGame = true end
+local function newRace() 
+  game.menu_state = "RACE_MENU" 
+  ui_upgrade:init() 
+  newGame = true 
+end
 
 function ui_menu:init()
   self.frame_mainMenu = ui.newFrame(0, 0, w, h)
@@ -43,15 +47,17 @@ end
 function ui_menu:update(dt)
   -- FAIRE LA DISTINCTION ENTRE NOUVELLE PARTIE ET PARTIE EN COURS /|\
   currentMenu = game.menu_state
+
   if currentMenu == "MAIN_MENU" then
     self.frame_mainMenu:update(dt)
   elseif currentMenu == "RACE_MENU" then
-    if game.race_state == "END" then
+    if game.race_state == "END" or game.menu_state == "RACE_MENU" then
       -- Les conditions de fin de course sont remis à 0 pour chaque joueur
       for i=1, #ia_list do
         ia_list[i]:reloadRaceInfos()
       end
     end
+
     ui_selectRace:update(dt)
   elseif currentMenu == "UPGRADE_MENU" then
     ui_upgrade:update(dt)

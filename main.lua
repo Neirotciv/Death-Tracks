@@ -14,6 +14,7 @@ bonus   = require("bonus")
 time    = require("time")
 
 ia_list = {}
+local debugMode = false
 
 function love.load()
   love.window.setMode(800, 600)
@@ -93,7 +94,7 @@ function love.draw()
   end
   
   love.graphics.setFont(font_veryLow)
-  love.graphics.print("game state : "..tostring(game.state).."\t menu state : "..tostring(game.menu_state), 5, h-15)
+  love.graphics.print("game state : "..tostring(game.state).."\t menu state : "..tostring(game.menu_state).."\t race state : "..tostring(game.race_state), 5, h-15)
 end
 
 function love.keypressed(key)
@@ -120,10 +121,15 @@ function love.keypressed(key)
   if game.state == "PLAY" and key == "escape" then
     game.state = "MENU"
   end
+
+  if key == "b" then
+    debugMode = not debugMode
+    player:setDebug(debugMode)
+  end
 end
 
 function love.mousepressed(x, y, btn)
-  if game.state == "MENU" then
+  if game.state == "PLAY" then
     player:mousepressed(x, y, btn)
   end
 end

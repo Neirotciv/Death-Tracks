@@ -11,6 +11,7 @@ local function level2() map.selectRace(2) ui_selectRace:reloadInfos() end
 local function level3() map.selectRace(3) ui_selectRace:reloadInfos() end
 local function level4() map.selectRace(4) ui_selectRace:reloadInfos() end
 local function level5() map.selectRace(5) ui_selectRace:reloadInfos() end
+local function level6() map.selectRace(6) ui_selectRace:reloadInfos() end
 
 function ui_selectRace:init()
   self.state = "RACE_MENU"
@@ -39,29 +40,38 @@ function ui_selectRace:init()
     
   -- Boutons du choix des niveaux
   self.frame_levels = ui.newFrame(0, h-120, w, 120)
-    self.frame_levels:setBackgroundColor(0.18, 0.28, 0.3)
+  self.frame_levels:setBackgroundColor(0.18, 0.28, 0.3)
+
   self.btn_lvl1 = ui.newButton(0, 0, 40, 40, "1", font_low)
-    self.btn_lvl1:setBackgroundColor(0.3, 0.49, 0.49)
-    
-    self.btn_lvl1:setEvent("pressed", level1)
+  self.btn_lvl1:setBackgroundColor(0.3, 0.49, 0.49)
+  self.btn_lvl1:setEvent("pressed", level1)
+
   self.btn_lvl2 = ui.newButton(0, 0, 40, 40, "2", font_low)
-    self.btn_lvl2:setBackgroundColor(0.3, 0.49, 0.49)
-    self.btn_lvl2:setEvent("pressed", level2)
+  self.btn_lvl2:setBackgroundColor(0.3, 0.49, 0.49)
+  self.btn_lvl2:setEvent("pressed", level2)
+
   self.btn_lvl3 = ui.newButton(0, 0, 40, 40, "3", font_low)
-    self.btn_lvl3:setBackgroundColor(0.3, 0.49, 0.49)
-    self.btn_lvl3:setEvent("pressed", level3)
+  self.btn_lvl3:setBackgroundColor(0.3, 0.49, 0.49)
+  self.btn_lvl3:setEvent("pressed", level3)
+
   self.btn_lvl4 = ui.newButton(0, 0, 40, 40, "4", font_low)
-    self.btn_lvl4:setBackgroundColor(0.3, 0.49, 0.49)
-    self.btn_lvl4:setEvent("pressed", level4)
+  self.btn_lvl4:setBackgroundColor(0.3, 0.49, 0.49)
+  self.btn_lvl4:setEvent("pressed", level4)
+
   self.btn_lvl5 = ui.newButton(0, 0, 40, 40, "5", font_low)
-    self.btn_lvl5:setBackgroundColor(0.3, 0.49, 0.49)
-    self.btn_lvl5:setEvent("pressed", level5)
+  self.btn_lvl5:setBackgroundColor(0.3, 0.49, 0.49)
+  self.btn_lvl5:setEvent("pressed", level5)
     
+  self.btn_lvl6 = ui.newButton(0, 0, 40, 40, "6", font_low)
+  self.btn_lvl6:setBackgroundColor(0.3, 0.49, 0.49)
+  self.btn_lvl6:setEvent("pressed", level6)
+
   self.frame_levels:addElement(10, 10, self.btn_lvl1)
   self.frame_levels:addElement(60, 10, self.btn_lvl2)
   self.frame_levels:addElement(110, 10, self.btn_lvl3)
   self.frame_levels:addElement(160, 10, self.btn_lvl4)
   self.frame_levels:addElement(210, 10, self.btn_lvl5)
+  self.frame_levels:addElement(260, 10, self.btn_lvl6)
 end
 
 function ui_selectRace:reloadInfos()

@@ -1,15 +1,3 @@
--- Creation : 29/09/2018
--- Author : Grim
--- Version : 
---  0.01 : 
---    Création du module.
---    Ajout du composant Icon
---    Ajout du composant ToolBar, intègre les icônes, alignement vertical ou horizontal
---    Ajout du composant Frame 
---
--- TODO LIST
--- Centrage verticale automatique du label "value" des sliders. 
-
 local ui = {}
 
 local function newElement(pX, pY)

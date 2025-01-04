@@ -7,7 +7,6 @@ function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
 -- Returns angle between two points.
 function math.angle(x1,y1, x2,y2) return math.atan2(y2-y1, x2-x1) end
 
-local debug = false
 local trailLength = 200
 
 local function addSensor(pX, pY, pDistance, pAngle)
@@ -38,6 +37,8 @@ function tank.newTank(pX, pY, pID)
     tank.id = pID
     tank.x = pX
     tank.y = pY
+    tank.initialX = pX
+    tank.initialY = pY
     tank.cameraX = 0
     tank.cameraY = 0
     tank.vx = 10
@@ -82,6 +83,7 @@ function tank.newTank(pX, pY, pID)
     tank.halfTurn = false
     tank.scan = false
     tank.destroy = false
+    tank.debug = false
     tank.currentWeapon = 1
     tank.timer = 0
     tank.damage = 1
@@ -128,6 +130,10 @@ function tank.newTank(pX, pY, pID)
     tank.bonus = "NIL"
     tank.newLap = false
     tank.finish = false
+    tank.life = 100
+    tank.speed = 0
+    tank.x = self.initialX
+    tank.y = self.initialY
   end
   
   -- Remet les variables par défaut
@@ -141,6 +147,10 @@ function tank.newTank(pX, pY, pID)
     end
   end
   
+  function tank:setDebug(pDebug)
+    self.debug = pDebug
+  end
+
   function tank:setPosition(pLine, pColumn)
     self.x = (map.tileSize) / 2 + ((pColumn-1) * map.tileSize) * map.scale
     self.y = (map.tileSize) / 2 + ((pLine-1) * map.tileSize) * map.scale
@@ -478,8 +488,6 @@ function tank.newTank(pX, pY, pID)
           end
         end
         
-        
-        
         -- Décalage par rapport à un joueur devant sa position
         for i=1, #ia_list do
           local player = ia_list[i]
@@ -510,7 +518,7 @@ function tank.newTank(pX, pY, pID)
       end
       -- Si tout les tours sont faits, on arrête le tank
       if self.lap >= map.level.maxLaps then
-        -- Le timer est incrémenter pour laisser le temps de passer la ligne, puis arrêt
+        -- Le timer est incrémenté pour laisser le temps de passer la ligne, puis arrêt
         tank.chrono = time.chrono
         self.timer = self.timer + dt
         if self.timer >= 1 then
@@ -642,7 +650,6 @@ function tank.newTank(pX, pY, pID)
   end
   
   function tank:draw()
-    --self:drawPath()
     if tank.state == "STOP" then
       love.graphics.draw(self.img, self.sprite[1], self.x, self.y, math.rad(self.angle), 1, 1, 16, 16)
     end
@@ -663,7 +670,10 @@ function tank.newTank(pX, pY, pID)
     --love.graphics.circle("line", self.passSensor.x, self.passSensor.y, 32)
   
     -- Affichage des capteurs
-    if debug then
+    if self.debug then
+      self:drawPath()
+      self:drawPathDebug()
+
       if self.collide then
         love.graphics.setColor(1, 0, 0)
         love.graphics.circle("line", self.x, self.y, 14)

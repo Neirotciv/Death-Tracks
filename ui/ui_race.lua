@@ -16,18 +16,22 @@ end
 
 function ui_race:update(dt)
   self.countdown = self.countdown - dt
+
   if self.countdown <= 2 then
     self.currentImage = 2
   end
+
   if self.countdown <= 1 then
     self.currentImage = 1
   end
+
   if self.countdown <= 0 then
     self.countdown = 0
     self.countdownEnd = true
     game.race_state = "IN_PROGRESS"
     time:startChrono()
   end
+  
   for i=1, #ia_list do
     local player = ia_list[1].finish
     local ia2 = ia_list[2].finish
