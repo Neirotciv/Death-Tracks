@@ -1,9 +1,6 @@
 --game = require("game")
 
 local tile = {}
-  tile.dirt = love.graphics.newImage("assets/img/dirt_tilable.png")
-  tile.start = love.graphics.newImage("assets/img/start.png")
-  tile.concrete = love.graphics.newImage("assets/img/concrete.png")
 
 local map = {}
 map.driveMap = {}
@@ -247,6 +244,10 @@ function map.update(dt)
 end
   
 function map.load()
+  tile.dirt = assetManager:getImage("dirt")
+  tile.start = assetManager:getImage("startLine")
+  tile.concrete = assetManager:getImage("concrete")
+
   map.levels = {}
   table.insert(map.levels, level_0)
   table.insert(map.levels, level_1)
@@ -254,7 +255,6 @@ function map.load()
   table.insert(map.levels, level_3)
   table.insert(map.levels, level_4)
   table.insert(map.levels, level_5)
-  print("map length : " .. #map)
   map.currentLevel = 1
   
   map.level = map.levels[map.currentLevel]

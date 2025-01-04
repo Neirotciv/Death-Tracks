@@ -4,6 +4,7 @@ bonusList = {}
 local bonusMax = game.maxBonus
 
 local bonus = {}
+function bonus:load() 
   bonus.size = 16
   bonus.scale = 2
   bonus.scaleSize = bonus.size * bonus.scale 
@@ -20,16 +21,17 @@ local bonus = {}
     bonus.booster.time = 2
 
   bonus.ammoBox = {}
-    bonus.ammoBox.image = love.graphics.newImage("assets/img/ammo_box.png")
+    bonus.ammoBox.image = assetManager:getImage("ammo")
     bonus.ammoBox.total = 2
     
   bonus.dollar = {}
-    bonus.dollar.image = love.graphics.newImage("assets/img/dollar.png")
+    bonus.dollar.image = assetManager:getImage("money")
     
   bonus.repair = {}
-    bonus.repair.image = love.graphics.newImage("assets/img/repair.png")
+    bonus.repair.image = assetManager:getImage("repair")
     
   bonus.tile = 0
+end
   
 function bonus:new(pLine, pColumn, pCategory, pValue)
   -- Centrage dans la tile

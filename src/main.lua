@@ -2,16 +2,17 @@ io.stdout:setvbuf('no')
 love.graphics.setDefaultFilter("nearest") -- Pixel art
 if arg[#arg] == "-debug" then require("mobdebug").start() end
 
-tank    = require("tank")
-map     = require("map")
-ia      = require("ia")
-game    = require("game")
-camera  = require("camera")
-ui_tank = require("ui/ui_tank")
-ui_menu = require("ui/ui_menu")
-ui_race = require("ui/ui_race")
-bonus   = require("bonus")
-time    = require("time")
+assetManager  = require("assetManager")
+tank          = require("tank")
+map           = require("map")
+ia            = require("ia")
+game          = require("game")
+camera        = require("camera")
+ui_tank       = require("ui/ui_tank")
+ui_menu       = require("ui/ui_menu")
+ui_race       = require("ui/ui_race")
+bonus         = require("bonus")
+time          = require("time")
 
 ia_list = {}
 local debugMode = false
@@ -21,7 +22,10 @@ function love.load()
   w = love.graphics.getWidth()
   h = love.graphics.getHeight()
   
+  assetManager:loadAssets()
+  bonus:load()
   map.load()
+  
   player = tank.newTank(350, 100, 1)
   ia_list[1] = player
   ia_list[2] = ia.new(350, 150, 2)
