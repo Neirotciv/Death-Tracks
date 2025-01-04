@@ -64,10 +64,10 @@ function tank.newTank(pX, pY, pID)
       tank.turret.state = "NIL"
     
     tank.trailList = {}
-    tank.trailImage = love.graphics.newImage("assets/img/trail.png")
+    tank.trailImage = assetManager:getImage("trail")
     
     tank.bulletList = {}
-    tank.bulletImage = love.graphics.newImage("assets/img/bullet.png")
+    tank.bulletImage = assetManager:getImage("bullet")
     
     tank.speed = 0
     tank.minSpeed = 50
@@ -109,7 +109,7 @@ function tank.newTank(pX, pY, pID)
     tank.passSensor = addSensor(pX, pY, 64, 0)
   
     -- Images du tank
-    tank.img = love.graphics.newImage("assets/img/tank.png")
+    tank.img = assetManager:getImage("tank")
     tank.sprite = {}
       tank.sprite[1] = love.graphics.newQuad(0, 0, 32, 32, tank.img:getDimensions())
       tank.sprite[2] = love.graphics.newQuad(32, 0, 32, 32, tank.img:getDimensions())
@@ -117,7 +117,7 @@ function tank.newTank(pX, pY, pID)
     tank.imgCurrent = 1
     
     -- Image de la tourelle
-    tank.turretImg = love.graphics.newImage("assets/img/turret.png")
+    tank.turretImg = assetManager:getImage("turret")
     tank.turretSpr = love.graphics.newQuad(0, 0, 32, 32, tank.turretImg:getDimensions())
     
   -- A chaque début de course

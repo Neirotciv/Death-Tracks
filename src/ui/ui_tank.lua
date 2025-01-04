@@ -21,9 +21,8 @@ function ui_tank:loadInfos(pPlayer)
   ui_tank.width = w
   ui_tank.height = 30
   ui_tank.lap = pPlayer.lap
-  
-  ui_tank.icon_bullet = ui.newIcon(450, 5, "assets/img/bullet_icon.png", 2)
-  ui_tank.icon_bomb = ui.newIcon(450, 5, "assets/img/bomb_icon.png", 2)
+  ui_tank.icon_bullet = assetManager:getImage("bulletIcon")
+  ui_tank.icon_bomb = assetManager:getImage("bombIcon")
 end
 
 function ui_tank:updateInfos(pPlayer)
