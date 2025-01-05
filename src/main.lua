@@ -23,6 +23,7 @@ function love.load()
   h = love.graphics.getHeight()
   
   assetManager:loadAssets()
+
   bonus:load()
   map.load()
   
