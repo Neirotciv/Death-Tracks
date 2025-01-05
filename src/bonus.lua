@@ -4,6 +4,7 @@ bonusList = {}
 local bonusMax = game.maxBonus
 
 local bonus = {}
+function bonus:load() 
   bonus.size = 16
   bonus.scale = 2
   bonus.scaleSize = bonus.size * bonus.scale 
@@ -30,6 +31,7 @@ local bonus = {}
     bonus.repair.image = assetManager:getImage("repair")
     
   bonus.tile = 0
+end
   
 function bonus:new(pLine, pColumn, pCategory, pValue)
   -- Centrage dans la tile

@@ -24,7 +24,9 @@ function love.load()
   
   assetManager:loadAssets()
 
+  bonus:load()
   map.load()
+  
   player = tank.newTank(350, 100, 1)
   ia_list[1] = player
   ia_list[2] = ia.new(350, 150, 2)
