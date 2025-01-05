@@ -29,8 +29,6 @@ function assetManager:loadAssets()
   self:loadImage("bullet", "assets/img/bullet.png")
   self:loadImage("tank", "assets/img/tank.png")
   self:loadImage("turret", "assets/img/turret.png")
-
-  print(self.images['dirt'])
 end
 
 return assetManager

@@ -9,28 +9,6 @@ function math.angle(x1,y1, x2,y2) return math.atan2(y2-y1, x2-x1) end
 
 local trailLength = 200
 
-local function addSensor(pX, pY, pDistance, pAngle)
-  local sensor = {}
-    sensor.angle = pAngle
-    sensor.updatedAngle = pAngle
-    sensor.distance = pDistance
-    sensor.x = pX + pDistance * math.cos(pAngle)
-    sensor.y = pY + pDistance * math.sin(pAngle)
-    sensor.line = 0
-    sensor.column = 0
-    sensor.collide = false
-  return sensor
-end
-
-local function updateSensor(pSensor, pX, pY, pAngle)
-    pSensor.updatedAngle = pSensor.angle + pAngle
-    pSensor.x = pX + pSensor.distance * math.cos(math.rad(pSensor.updatedAngle))
-    pSensor.y = pY + pSensor.distance * math.sin(math.rad(pSensor.updatedAngle))
-    pSensor.line = math.floor(((pSensor.y - camera.position.y) - map.cameraY) / (map.tileSize * map.scale)) + 1
-    pSensor.column = math.floor(((pSensor.x - camera.position.x) - map.cameraX) / (map.tileSize * map.scale)) + 1
-  return pSensor
-end
-
 function tank.newTank(pX, pY, pID)
   local tank = {}
   -- Variables du comportement du tank
@@ -52,7 +30,7 @@ function tank.newTank(pX, pY, pID)
     tank.line = 0
     tank.oldLine = 0
     tank.oldColumn = 0
-    tank.sensors = {}
+    -- tank.sensors = {}
     tank.pathPoints = {}
     
     tank.mouse = { x = 0, y = 0 }
@@ -95,18 +73,18 @@ function tank.newTank(pX, pY, pID)
     
     -- Ajout des capteurs de collision
     -- Eloigné
-    tank.sensors = {}
-      tank.sensors[1] = addSensor(pX, pY, 128, 0) -- devant
-      tank.sensors[2] = addSensor(pX, pY, 128, 315) -- gauche
-      tank.sensors[3] = addSensor(pX, pY, 128, 45) -- droite
+    -- tank.sensors = {}
+    --   tank.sensors[1] = addSensor(pX, pY, 128, 0) -- devant
+    --   tank.sensors[2] = addSensor(pX, pY, 128, 315) -- gauche
+    --   tank.sensors[3] = addSensor(pX, pY, 128, 45) -- droite
     
-      -- Proche
-      tank.sensors[4] = addSensor(pX, pY, 64, 0)
-      tank.sensors[5] = addSensor(pX, pY, 64, 330)
-      tank.sensors[6] = addSensor(pX, pY, 64, 30)
+    --   -- Proche
+    --   tank.sensors[4] = addSensor(pX, pY, 64, 0)
+    --   tank.sensors[5] = addSensor(pX, pY, 64, 330)
+    --   tank.sensors[6] = addSensor(pX, pY, 64, 30)
     
-    tank.bonusSensor = addSensor(pX, pY, 100, 0)
-    tank.passSensor = addSensor(pX, pY, 64, 0)
+    -- tank.bonusSensor = addSensor(pX, pY, 100, 0)
+    -- tank.passSensor = addSensor(pX, pY, 64, 0)
   
     -- Images du tank
     tank.img = assetManager:getImage("tank")
@@ -254,16 +232,6 @@ function tank.newTank(pX, pY, pID)
         self.shoot = false
       end
       
-      -- Actualisation de la position et de l'angle des capteurs
-      self.sensors[1] = updateSensor(tank.sensors[1], self.x, self.y, self.angle)
-      self.sensors[2] = updateSensor(tank.sensors[2], self.x, self.y, self.angle)
-      self.sensors[3] = updateSensor(tank.sensors[3], self.x, self.y, self.angle)
-      self.sensors[4] = updateSensor(tank.sensors[4], self.x, self.y, self.angle)
-      self.sensors[5] = updateSensor(tank.sensors[5], self.x, self.y, self.angle)
-      self.sensors[6] = updateSensor(tank.sensors[6], self.x, self.y, self.angle)
-      self.bonusSensor = updateSensor(self.bonusSensor, self.x, self.y, self.angle)
-      self.passSensor = updateSensor(self.passSensor, self.x, self.y, self.angle)
-      
       -- Collision avec les autres tanks
       for i=1, #ia_list do
         local tankI = ia_list[i]
@@ -284,12 +252,12 @@ function tank.newTank(pX, pY, pID)
           end
           
           -- IA POUR LE DEPASSEMENT - EN COURS
-          if tankI.sensors[4].x >= (tankJ.x - (tankJ.size/2)) and tankI.sensors[4].x <= (tankJ.x + (tankJ.size/2))
-          and tankI.sensors[4].y >= (tankJ.y - (tankJ.size/2)) and tankI.sensors[4].y <= (tankJ.y + (tankJ.size/2)) then
-            tankI.sensors[4].collide = true
-          else
-            tankI.sensors[4].collide = false
-          end
+          -- if tankI.sensors[4].x >= (tankJ.x - (tankJ.size/2)) and tankI.sensors[4].x <= (tankJ.x + (tankJ.size/2))
+          -- and tankI.sensors[4].y >= (tankJ.y - (tankJ.size/2)) and tankI.sensors[4].y <= (tankJ.y + (tankJ.size/2)) then
+          --   tankI.sensors[4].collide = true
+          -- else
+          --   tankI.sensors[4].collide = false
+          -- end
         end
       end
       
@@ -355,13 +323,13 @@ function tank.newTank(pX, pY, pID)
       -- Chemin tracé par l'ia pour éviter les demi-tours
       -- Création d'un point toute les 2 secondes
       -- Laisser le temps au tank de démarrer
-      if self.pathTime >= 1 and self.halfTurn == false then
-        if #self.pathPoints > 1 then
-          self.pathPoints[#self.pathPoints-1].area = 32+10
-        end
-        self:addPathPoint(self.x, self.y)
-        self.pathTime = 0
-      end
+      -- if self.pathTime >= 1 and self.halfTurn == false then
+      --   if #self.pathPoints > 1 then
+      --     self.pathPoints[#self.pathPoints-1].area = 32+10
+      --   end
+      --   self:addPathPoint(self.x, self.y)
+      --   self.pathTime = 0
+      -- end
       
       -- Contrôle des points de passage, si le tank est au dessus d'un point créé c'est qu'il a fait demi tour
       --[[for i=#self.pathPoints, 1, -1 do
@@ -401,109 +369,6 @@ function tank.newTank(pX, pY, pID)
         table.remove(self.pathPoints, 1)
       end
       
-      if self.type == "IA" then
-        -- A la fin du compte à rebours, les tanks peuvent avancer
-        if game.race_state == "IN_PROGRESS" then
-          self.state = "MOVE_FORWARD"
-        end
-        
-        -- Utilisation de capteurs pour ajuster la trajectoire
-        -- Collision avec les capteurs
-        for i=1, 3 do
-          if self.sensors[i].line >= 1 and self.sensors[i].line <= map.height and
-          self.sensors[i].column >= 1 and self.sensors[i].column <= map.width then
-            if map.level[self.sensors[i].line][self.sensors[i].column] == 0 then
-              self.sensors[i].collide = true
-            else
-              self.sensors[i].collide = false
-            end
-          end
-        end
-        
-        if self.sensors[1].collide then
-          if self.sensors[3].collide == false then
-            self.angle = self.angle + 90 * dt
-            if self.angle > 360 then
-              self.angle = 1
-            end
-          end
-          if self.sensors[2].collide == false then
-            self.angle = self.angle - 90 * dt
-            if self.angle <= 0 then
-              self.angle = 360
-            end
-          end
-        end
-        
-        if self.sensors[2].collide then
-          self.angle = self.angle + 90 * dt
-          if self.angle > 360 then
-            self.angle = 1
-          end
-        end
-        
-        if self.sensors[3].collide then
-          self.angle = self.angle - 90 * dt
-          if self.angle <= 0 then
-            self.angle = 360
-          end
-        end
-        
-        if self.sensors[1].collide and self.sensors[3].collide then
-          if self.sensors[2].collide == false then
-            self.angle = self.angle - 90 * dt
-            if self.angle <= 0 then
-              self.angle = 360
-            end
-          end
-        end
-        
-        -- Si les 3 capteurs sont TRUE, tank bloqué
-        if self.sensors[1].collide and self.sensors[2].collide and self.sensors[3].collide then
-          self.angle = self.angle - 90 * dt
-          if self.angle <= 0 then
-            self.angle = 360
-          end
-        end
-        
-         -- Recherche des bonus
-        for i=1, #bonusList do
-          local bonus = bonusList[i]
-          if self.bonusSensor.x - 64 < bonus.xo and self.bonusSensor.x + 64 > bonus.xo and self.bonusSensor.y - 64 < bonus.yo and self.bonusSensor.y + 64 > bonus.yo then
-            
-            --if self.life < self.maxLife then
-              --if bonusList[i].category == "repair" then
-                local bonusAngle = math.deg(math.angle(self.x, self.y, bonus.xo, bonus.yo))
-                if bonusAngle < 0 then
-                  bonusAngle = 360 + bonusAngle
-                end
-                if self.angle < bonusAngle then
-                  self.angle = self.angle + 90 * dt
-                end
-                if self.angle > bonusAngle then
-                  self.angle = self.angle - 90 * dt
-                end
-              --end
-            --end
-          end
-        end
-        
-        -- Décalage par rapport à un joueur devant sa position
-        for i=1, #ia_list do
-          local player = ia_list[i]
-          if i ~= self.ID then
-            if self.passSensor.x - 32 < player.x and self.passSensor.x + 32 > player.x and self.passSensor.y - 32 < player.y and self.passSensor.y + 32 > player.y then
-              local rand = math.random(0, 1)
-              if rand == 1 then
-                self.angle = self.angle + 90 * dt
-              else 
-                self.angle = self.angle - 90 * dt
-              end
-            end
-          end
-        end
-      end
-    
       -- Vérification de la position sur le circuit
       self.line = math.floor((self.cameraY - map.cameraY) / (map.tileSize * map.scale)) + 1
       self.column = math.floor((self.cameraX - map.cameraX) / (map.tileSize * map.scale)) + 1
