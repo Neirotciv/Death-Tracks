@@ -17,10 +17,10 @@ function ui_selectRace:init()
   self.state = "RACE_MENU"
   game.race_state = "PLAY"
   
-  self.title = ui.newLabel(w/2, 30, 0, 0, "SELECT RACE", font, "center", "center")
+  self.title = ui.newLabel(screenWidth/2, 30, 0, 0, "SELECT RACE", font, "center", "center")
   self.btn_back = ui.newButton(10, 10, 100, 40, "BACK", font_low)
     self.btn_back:setEvent("pressed", backButton)
-  self.btn_upgrade = ui.newButton(w-110, 10, 100, 40, "GARAGE", font_low)
+  self.btn_upgrade = ui.newButton(screenWidth-110, 10, 100, 40, "GARAGE", font_low)
     self.btn_upgrade:setEvent("pressed", upgradeButton)
     
   -- Frame d'infos du niveau
@@ -33,13 +33,13 @@ function ui_selectRace:init()
   self.frame_infos:addElement(0, 40, self.lbl_price)
   
   if map.level.lock == true then
-    self.lbl_lock = ui.newLabel(w/2, 130+(20 * (map.tileSize / 5)), 0, 20, "Lock", font, "center", "center")
+    self.lbl_lock = ui.newLabel(screenWidth/2, 130+(20 * (map.tileSize / 5)), 0, 20, "Lock", font, "center", "center")
   else
-    self.lbl_lock = ui.newLabel(w/2, 120+(20 * (map.tileSize / 5)), 0, 20, "Unlock", font, "center", "center")
+    self.lbl_lock = ui.newLabel(screenWidth/2, 120+(20 * (map.tileSize / 5)), 0, 20, "Unlock", font, "center", "center")
   end
     
   -- Boutons du choix des niveaux
-  self.frame_levels = ui.newFrame(0, h-120, w, 120)
+  self.frame_levels = ui.newFrame(0, screenHeight-120, screenWidth, 120)
   self.frame_levels:setBackgroundColor(0.18, 0.28, 0.3)
 
   self.btn_lvl1 = ui.newButton(0, 0, 40, 40, "1", font_low)
@@ -112,7 +112,7 @@ function ui_selectRace:draw()
   self.lbl_lock:draw()
   
   -- Affichage de la miniature de la map
-  map.drawMin(w/2, 100)
+  map.drawMin(screenWidth/2, 100)
 end
 
 return ui_selectRace

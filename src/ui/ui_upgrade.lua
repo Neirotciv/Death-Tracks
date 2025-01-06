@@ -23,10 +23,10 @@ local function startButton() game.state = "PLAY" game.menu_state = "MAIN_MENU" u
 
 function ui_upgrade:init()
   self.state = "UPGRADE_MENU"
-  self.title = ui.newLabel(w/2, 30, 0, 0, "UPGRADE", font, "center", "center")
+  self.title = ui.newLabel(screenWidth/2, 30, 0, 0, "UPGRADE", font, "center", "center")
   self.btn_back = ui.newButton(10, 10, 100, 40, "BACK", font_low)
     self.btn_back:setEvent("pressed", backButton)
-  self.btn_start = ui.newButton(w-110, 100, 100, 40, "START", font_low)
+  self.btn_start = ui.newButton(screenWidth-110, 100, 100, 40, "START", font_low)
     self.btn_start:setEvent("pressed", startButton)
   
     self.img_tank = {}
@@ -98,7 +98,7 @@ function ui_upgrade:init()
     self.lifeBar.progress = ((self.lifeBar.width * game.life) / 100)
   
   -- Portefeuille
-  self.lbl_money = ui.newLabel(w/2, self.lifeBar.y + 100, 0, 0, "Money : "..tostring(game.money), font, "center", "center")
+  self.lbl_money = ui.newLabel(screenWidth/2, self.lifeBar.y + 100, 0, 0, "Money : "..tostring(game.money), font, "center", "center")
 end
 
 function ui_upgrade:update(dt)

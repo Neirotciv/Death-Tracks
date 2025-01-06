@@ -5,7 +5,7 @@ local tile = {}
 local map = {}
 map.driveMap = {}
 
-local debug = false
+local debug = true
 
 map.tileSize = 64
 map.x = 0

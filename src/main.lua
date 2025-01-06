@@ -20,8 +20,8 @@ local debugMode = false
 
 function love.load()
   love.window.setMode(800, 600)
-  w = love.graphics.getWidth()
-  h = love.graphics.getHeight()
+  screenWidth = love.graphics.getWidth()
+  screenHeight = love.graphics.getHeight()
   
   assetManager:loadAssets()
 
@@ -96,12 +96,12 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     ui_tank:drawInfo()
     time:draw()
-    love.graphics.print("fps "..love.timer.getFPS(), w - 50, 5)
+    love.graphics.print("fps "..love.timer.getFPS(), screenWidth - 50, 5)
     --player:drawDebug()
   end
   
   love.graphics.setFont(font_veryLow)
-  love.graphics.print("game state : "..tostring(game.state).."\t menu state : "..tostring(game.menu_state).."\t race state : "..tostring(game.race_state), 5, h-15)
+  love.graphics.print("game state : "..tostring(game.state).."\t menu state : "..tostring(game.menu_state).."\t race state : "..tostring(game.race_state), 5, screenHeight-15)
 end
 
 function love.keypressed(key)

@@ -116,16 +116,14 @@ function tank.newTank(pX, pY, pID)
     
     -- Actualisation de la camera
     if self.type == "PLAYER" then
-      local deltaX = camera.position.x - (self.x - w / 2)
-      local deltaY = camera.position.y - (self.y - (h+60) / 2) -- 60 = hauteur de l'ui_tank pendant la course
+      local deltaX = camera.position.x - (self.x - screenWidth / 2)
+      local deltaY = camera.position.y - (self.y - (screenHeight+60) / 2) -- 60 = hauteur de l'ui_tank pendant la course
       
-      -- *0.05 rajoute un effet "smooth"
-      camera.position.x = math.floor(camera.position.x - (deltaX * 0.05))
-      camera.position.y = math.floor(camera.position.y - (deltaY * 0.05))
+      camera:follow(self.x, self.y, screenWidth, screenHeight)
       
       -- Réactualisation des coordonnées de la souris par rapport à ceux de la caméra
-      self.mouse.x = camera.position.x + love.mouse.getX()
-      self.mouse.y = camera.position.y + love.mouse.getY()
+      self.mouse.x = camera.position.x + love.mouse.getX() * camera.scale
+      self.mouse.y = camera.position.y + love.mouse.getY() * camera.scale
       
       -- Angle de la tourelle (suit le curseur de la souris)
       if self.currentWeapon == 1 then

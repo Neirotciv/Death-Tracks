@@ -18,7 +18,7 @@ function ui_tank:loadInfos(pPlayer)
   ui_tank.ammo = pPlayer.ammo
   ui_tank.currentWeapon = pPlayer.currentWeapon
   ui_tank.money = pPlayer.money
-  ui_tank.width = w
+  ui_tank.width = screenWidth
   ui_tank.height = 30
   ui_tank.lap = pPlayer.lap
   ui_tank.icon_bullet = assetManager:getImage("bulletIcon")
@@ -32,7 +32,7 @@ function ui_tank:updateInfos(pPlayer)
   ui_tank.ammo = pPlayer.ammo
   ui_tank.currentWeapon = pPlayer.currentWeapon
   ui_tank.money = pPlayer.money
-  ui_tank.width = w
+  ui_tank.width = screenWidth
   ui_tank.height = 60
   ui_tank.lap = pPlayer.lap
   
