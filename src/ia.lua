@@ -204,6 +204,17 @@ function ia.new(pX, pY)
     self.state = "STOP"
   end
 
+  function self:drawDebug()
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("front : "..tostring(self.sensors[1].collide), 10, 30)
+    love.graphics.print("left : "..tostring(self.sensors[2].collide), 10, 50)
+    love.graphics.print("right : "..tostring(self.sensors[3].collide), 10, 70)
+    love.graphics.print("x"..self.mouse.x, 10, 90)
+    love.graphics.print("y"..self.mouse.y, 10, 110)
+    love.graphics.print("x"..self.x, 10, 130)
+    love.graphics.print("y"..self.y, 10, 150)
+  end
+
   return self
 end
 

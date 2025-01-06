@@ -86,7 +86,8 @@ function love.draw()
       ia_list[4]:draw()
     camera:unset()
     -- Compte à rebours
-      ui_race:draw()
+    ui_race:draw()
+    player:drawDebug()
   end
   
   -- Affichage des UIs en dehors de la caméra
@@ -118,7 +119,7 @@ function love.keypressed(key)
     ia_list[4]:moveForward()
   end
   
-  if key == "f1" then
+  if key == "c" then
     camera:setScale()
   end
   

@@ -10,112 +10,91 @@ function math.angle(x1,y1, x2,y2) return math.atan2(y2-y1, x2-x1) end
 local trailLength = 200
 
 function tank.newTank(pX, pY, pID)
-  local tank = {}
-  -- Variables du comportement du tank
-    tank.id = pID
-    tank.x = pX
-    tank.y = pY
-    tank.initialX = pX
-    tank.initialY = pY
-    tank.cameraX = 0
-    tank.cameraY = 0
-    tank.vx = 10
-    tank.vy = 10
-    tank.angle = 0
-    tank.size = 32
-    tank.state = "STOP"
-    tank.type = "PLAYER"
-    tank.collide = false
-    tank.column = 0
-    tank.line = 0
-    tank.oldLine = 0
-    tank.oldColumn = 0
-    -- tank.sensors = {}
-    tank.pathPoints = {}
-    
-    tank.mouse = { x = 0, y = 0 }
-    
-    tank.turret = {}
-      tank.turret.x = 0
-      tank.turret.y = 0
-      tank.turret.angle = 0
-      tank.turret.state = "NIL"
-    
-    tank.trailList = {}
-    tank.trailImage = assetManager:getImage("trail")
-    
-    tank.bulletList = {}
-    tank.bulletImage = assetManager:getImage("bullet")
-    
-    tank.speed = 0
-    tank.minSpeed = 50
-    tank.maxSpeed = 200
-    tank.life = 100
-    tank.maxLife = 100
-    tank.lap = 0
-    tank.bonus = "NIL"
-    tank.ammo = 50
-    tank.shoot = false
-    tank.newLap = false
-    tank.finish = false
-    tank.halfTurn = false
-    tank.scan = false
-    tank.destroy = false
-    tank.debug = false
-    tank.currentWeapon = 1
-    tank.timer = 0
-    tank.damage = 1
-    tank.shield = 1
-    tank.money = game.money
-    tank.pathTime = 0
-    tank.chrono = 0
-    tank.mapCopy = {} -- Masquer les tiles déjà parcouru
-    
-    -- Ajout des capteurs de collision
-    -- Eloigné
-    -- tank.sensors = {}
-    --   tank.sensors[1] = addSensor(pX, pY, 128, 0) -- devant
-    --   tank.sensors[2] = addSensor(pX, pY, 128, 315) -- gauche
-    --   tank.sensors[3] = addSensor(pX, pY, 128, 45) -- droite
-    
-    --   -- Proche
-    --   tank.sensors[4] = addSensor(pX, pY, 64, 0)
-    --   tank.sensors[5] = addSensor(pX, pY, 64, 330)
-    --   tank.sensors[6] = addSensor(pX, pY, 64, 30)
-    
-    -- tank.bonusSensor = addSensor(pX, pY, 100, 0)
-    -- tank.passSensor = addSensor(pX, pY, 64, 0)
+  local self = {}
+  self.id = pID
+  self.x = pX
+  self.y = pY
+  self.initialX = pX
+  self.initialY = pY
+  self.cameraX = 0
+  self.cameraY = 0
+  self.vx = 10
+  self.vy = 10
+  self.angle = 0
+  self.size = 32
+  self.state = "STOP"
+  self.type = "PLAYER"
+  self.collide = false
+  self.column = 0
+  self.line = 0
+  self.oldLine = 0
+  self.oldColumn = 0
+  self.pathPoints = {}
+  self.mouse = { x = 0, y = 0 }
   
-    -- Images du tank
-    tank.img = assetManager:getImage("tank")
-    tank.sprite = {}
-      tank.sprite[1] = love.graphics.newQuad(0, 0, 32, 32, tank.img:getDimensions())
-      tank.sprite[2] = love.graphics.newQuad(32, 0, 32, 32, tank.img:getDimensions())
-      tank.sprite[3] = love.graphics.newQuad(64, 0, 32, 32, tank.img:getDimensions())
-    tank.imgCurrent = 1
+  self.turret = {}
+  self.turret.x = 0
+  self.turret.y = 0
+  self.turret.angle = 0
+  self.turret.state = "NIL"
+  
+  self.trailList = {}
+  self.trailImage = assetManager:getImage("trail")
+  
+  self.bulletList = {}
+  self.bulletImage = assetManager:getImage("bullet")
+  
+  self.speed = 0
+  self.minSpeed = 50
+  self.maxSpeed = 200
+  self.life = 100
+  self.maxLife = 100
+  self.lap = 0
+  self.bonus = "NIL"
+  self.ammo = 50
+  self.shoot = false
+  self.newLap = false
+  self.finish = false
+  self.halfTurn = false
+  self.scan = false
+  self.destroy = false
+  self.debug = false
+  self.currentWeapon = 1
+  self.timer = 0
+  self.damage = 1
+  self.shield = 1
+  self.money = game.money
+  self.pathTime = 0
+  self.chrono = 0
+  self.mapCopy = {} -- Masquer les tiles déjà parcouru
+  
+  self.img = assetManager:getImage("tank")
+  self.sprite = {}
+  self.sprite[1] = love.graphics.newQuad(0, 0, 32, 32, self.img:getDimensions())
+  self.sprite[2] = love.graphics.newQuad(32, 0, 32, 32, self.img:getDimensions())
+  self.sprite[3] = love.graphics.newQuad(64, 0, 32, 32, self.img:getDimensions())
+  self.imgCurrent = 1
+  
+  self.turretImg = assetManager:getImage("turret")
+  self.turretSpr = love.graphics.newQuad(0, 0, 32, 32, self.turretImg:getDimensions())
     
-    -- Image de la tourelle
-    tank.turretImg = assetManager:getImage("turret")
-    tank.turretSpr = love.graphics.newQuad(0, 0, 32, 32, tank.turretImg:getDimensions())
-    
-  -- A chaque début de course
-  function tank:init()
+  function self:init()
     self.mapCopy = map.level
   end
   
-  function tank:reloadRaceInfos()
-    tank.lap = 0
-    tank.bonus = "NIL"
-    tank.newLap = false
-    tank.finish = false
-    tank.life = 100
-    tank.speed = 0
-    tank.x = self.initialX
-    tank.y = self.initialY
+  function self:reloadRaceInfos()
+    self.lap = 0
+    self.bonus = "NIL"
+    self.newLap = false
+    self.finish = false
+    self.life = 100
+    self.speed = 0
+    self.x = self.initialX
+    self.y = self.initialY
   end
   
   -- Remet les variables par défaut
-  function tank:reloadBeforeRace()
+  function self:reloadBeforeRace()
     self.speed = 0
     self.angle = 0
     self.destroy = false
@@ -125,17 +104,17 @@ function tank.newTank(pX, pY, pID)
     end
   end
   
-  function tank:setDebug(pDebug)
+  function self:setDebug(pDebug)
     self.debug = pDebug
   end
 
-  function tank:setPosition(pLine, pColumn)
+  function self:setPosition(pLine, pColumn)
     self.x = (map.tileSize) / 2 + ((pColumn-1) * map.tileSize) * map.scale
     self.y = (map.tileSize) / 2 + ((pLine-1) * map.tileSize) * map.scale
     self.angle = 0
   end
   
-  function tank:update(dt)
+  function self:update(dt)
     -- Ligne et colonne précédente pour gérer les collisions
     self.oldLine = self.line
     self.oldColumn = self.column
@@ -167,8 +146,8 @@ function tank.newTank(pX, pY, pID)
     self.cameraY = self.y - camera.position.y
     
     -- Coordonnées de la tourelle
-    tank.turret.x = self.x
-    tank.turret.y = self.y
+    self.turret.x = self.x
+    self.turret.y = self.y
     
     -- Permet d'avancer dans l'axe du tank
     local angle_radian = math.rad(self.angle)
@@ -204,21 +183,20 @@ function tank.newTank(pX, pY, pID)
         if self.speed <= self.maxSpeed then 
           self.speed = self.speed + 60 * dt
         end
-        self.x = tank.x + self.vx
-        self.y = tank.y + self.vy
-        tank.imgCurrent = tank.imgCurrent + (6 * dt)
-        if math.floor(tank.imgCurrent) > #tank.sprite then
-          tank.imgCurrent = 1
+        self.x = self.x + self.vx
+        self.y = self.y + self.vy
+        self.imgCurrent = self.imgCurrent + (6 * dt)
+        if math.floor(self.imgCurrent) > #self.sprite then
+          self.imgCurrent = 1
         end
-        self:addTrail()
-        self:removeTrail()
+        self:handleTrail()
         -- **Incrémentation du temps pour tracer les points de passages**
         self.pathTime = self.pathTime + dt
       elseif self.state == "MOVE_FORBACK" then
         self.x = self.x - (self.vx * 0.5)
         self.y = self.y - (self.vy * 0.5)
-        self.imgCurrent = tank.imgCurrent - (3 * dt)
-        if math.floor(tank.imgCurrent) < 1 then
+        self.imgCurrent = self.imgCurrent - (3 * dt)
+        if math.floor(self.imgCurrent) < 1 then
           self.imgCurrent = 3.9
         end
       elseif self.state == "STOP" then
@@ -232,91 +210,8 @@ function tank.newTank(pX, pY, pID)
         self.shoot = false
       end
       
-      -- Collision avec les autres tanks
-      for i=1, #ia_list do
-        local tankI = ia_list[i]
-        for j=1, #ia_list do
-          local tankJ = ia_list[j]
-          local tankDistance = math.dist(tankI.x, tankI.y, tankJ.x, tankJ.y)
-          -- Si la distance est inférieur à la taille d'un tank alors les tanks se repoussent de 2 pixels
-          if tankDistance <= self.size then
-            if tankI.x > tankJ.x then tankI.x = tankI.x + 2 end
-            if tankI.x < tankJ.x then tankI.x = tankI.x - 2 end
-            if tankI.y > tankJ.y then tankI.y = tankI.y + 2 end
-            if tankI.y < tankJ.y then tankI.y = tankI.y - 2 end
-            
-            if tankJ.x > tankI.x then tankJ.x = tankJ.x + 2 end
-            if tankJ.x < tankI.x then tankJ.x = tankJ.x - 2 end
-            if tankJ.y > tankI.y then tankJ.y = tankJ.y + 2 end
-            if tankJ.y < tankI.y then tankJ.y = tankJ.y - 2 end
-          end
-          
-          -- IA POUR LE DEPASSEMENT - EN COURS
-          -- if tankI.sensors[4].x >= (tankJ.x - (tankJ.size/2)) and tankI.sensors[4].x <= (tankJ.x + (tankJ.size/2))
-          -- and tankI.sensors[4].y >= (tankJ.y - (tankJ.size/2)) and tankI.sensors[4].y <= (tankJ.y + (tankJ.size/2)) then
-          --   tankI.sensors[4].collide = true
-          -- else
-          --   tankI.sensors[4].collide = false
-          -- end
-        end
-      end
-      
-      -- Déplacement des balles
-      if #self.bulletList >= 1 then
-        for i=#self.bulletList, 1, -1 do
-          local bullet = self.bulletList[i]
-          local vx = math.cos(bullet.angle) * (450 * dt)
-          local vy = math.sin(bullet.angle) * (450* dt)
-          bullet.x = bullet.x + vx
-          bullet.y = bullet.y + vy
-          
-          -- Collision des balles avec la map
-          local line = math.floor((bullet.y ) / (map.tileSize * map.scale)) + 1
-          local column = math.floor((bullet.x ) / (map.tileSize * map.scale)) + 1
-          
-          if line >= 1 and line <= 20 and column >= 1 and column <= 20 then
-            -- Si il n'y a pas de collision
-            -- Haut
-            if bullet.y - 10 <= (line-1) * map.tileSize and map.level[line-1][column] == 0 then
-              bullet.collide = true
-              self:removeBullet(i)
-            end
-            -- Bas
-            if bullet.y + 10 >= (line) * map.tileSize and map.level[line+1][column] == 0 then
-              bullet.collide = true
-              self:removeBullet(i)
-            end
-            -- Gauche
-            if bullet.x - 10 <= (column-1) * map.tileSize and map.level[line][column-1] == 0 then
-              bullet.collide = true
-              self:removeBullet(i)
-            end
-            -- Droite
-            if bullet.x + 10 >= (column) * map.tileSize and map.level[line][column+1] == 0 then
-              bullet.collide = true
-              self:removeBullet(i)
-            end
-            -- Collision des balles avec les tanks
-            for j=1, #ia_list do            
-              if j == self.id then
-                -- Rien
-              else
-                local tank = ia_list[j]
-                local distance = math.dist(bullet.x, bullet.y, tank.x, tank.y)
-                if distance <= 16 then 
-                --if bullet.x > tank.x - tank.size/2 and bullet.x < tank.x + tank.size/2 and bullet.y > tank.y - tank.size/1 and bullet.y < tank.y + tank.size/2 then
-                  bullet.collide = true
-                  tank:takeDammage()
-                  table.remove(self.bulletList, i)
-                end
-              end
-            end
-          else
-            -- Si elle sort de la map
-            --self:removeBullet(i)
-          end
-        end
-      end
+      self:tankToTankCollision()
+      self:bulletHandler(dt)
       
       -------------------- IA --------------------
       
@@ -384,11 +279,11 @@ function tank.newTank(pX, pY, pID)
       -- Si tout les tours sont faits, on arrête le tank
       if self.lap >= map.level.maxLaps then
         -- Le timer est incrémenté pour laisser le temps de passer la ligne, puis arrêt
-        tank.chrono = time.chrono
+        self.chrono = time.chrono
         self.timer = self.timer + dt
         if self.timer >= 1 then
           self.state = "STOP"
-          tank.finish = true
+          self.finish = true
         end
       end
       
@@ -440,9 +335,98 @@ function tank.newTank(pX, pY, pID)
       end
     end
   end
+
+  -- TODO : voir le code commenté
+  function self:tankToTankCollision()
+    for i=1, #ia_list do
+      local tankI = ia_list[i]
+      for j=1, #ia_list do
+        local tankJ = ia_list[j]
+        local tankDistance = math.dist(tankI.x, tankI.y, tankJ.x, tankJ.y)
+        -- Si la distance est inférieur à la taille d'un tank alors les tanks se repoussent de 2 pixels
+        if tankDistance <= self.size then
+          if tankI.x > tankJ.x then tankI.x = tankI.x + 2 end
+          if tankI.x < tankJ.x then tankI.x = tankI.x - 2 end
+          if tankI.y > tankJ.y then tankI.y = tankI.y + 2 end
+          if tankI.y < tankJ.y then tankI.y = tankI.y - 2 end
+          
+          if tankJ.x > tankI.x then tankJ.x = tankJ.x + 2 end
+          if tankJ.x < tankI.x then tankJ.x = tankJ.x - 2 end
+          if tankJ.y > tankI.y then tankJ.y = tankJ.y + 2 end
+          if tankJ.y < tankI.y then tankJ.y = tankJ.y - 2 end
+        end
+        
+        -- IA POUR LE DEPASSEMENT - EN COURS
+        -- if tankI.sensors[4].x >= (tankJ.x - (tankJ.size/2)) and tankI.sensors[4].x <= (tankJ.x + (tankJ.size/2))
+        -- and tankI.sensors[4].y >= (tankJ.y - (tankJ.size/2)) and tankI.sensors[4].y <= (tankJ.y + (tankJ.size/2)) then
+        --   tankI.sensors[4].collide = true
+        -- else
+        --   tankI.sensors[4].collide = false
+        -- end
+      end
+    end
+  end
+
+  function self:bulletHandler(dt)
+    if #self.bulletList >= 1 then
+      for i=#self.bulletList, 1, -1 do
+        local bullet = self.bulletList[i]
+        local vx = math.cos(bullet.angle) * (450 * dt)
+        local vy = math.sin(bullet.angle) * (450* dt)
+        bullet.x = bullet.x + vx
+        bullet.y = bullet.y + vy
+        
+        -- Collision des balles avec la map
+        local line = math.floor((bullet.y ) / (map.tileSize * map.scale)) + 1
+        local column = math.floor((bullet.x ) / (map.tileSize * map.scale)) + 1
+        
+        if line >= 1 and line <= 20 and column >= 1 and column <= 20 then
+          -- Si il n'y a pas de collision
+          -- Haut
+          if bullet.y - 10 <= (line-1) * map.tileSize and map.level[line-1][column] == 0 then
+            bullet.collide = true
+            self:removeBullet(i)
+          end
+          -- Bas
+          if bullet.y + 10 >= (line) * map.tileSize and map.level[line+1][column] == 0 then
+            bullet.collide = true
+            self:removeBullet(i)
+          end
+          -- Gauche
+          if bullet.x - 10 <= (column-1) * map.tileSize and map.level[line][column-1] == 0 then
+            bullet.collide = true
+            self:removeBullet(i)
+          end
+          -- Droite
+          if bullet.x + 10 >= (column) * map.tileSize and map.level[line][column+1] == 0 then
+            bullet.collide = true
+            self:removeBullet(i)
+          end
+          -- Collision des balles avec les tanks
+          for j=1, #ia_list do            
+            if j == self.id then
+              -- Rien
+            else
+              local tank = ia_list[j]
+              local distance = math.dist(bullet.x, bullet.y, tank.x, tank.y)
+              if distance <= 16 then 
+              --if bullet.x > tank.x - tank.size/2 and bullet.x < tank.x + tank.size/2 and bullet.y > tank.y - tank.size/1 and bullet.y < tank.y + tank.size/2 then
+                bullet.collide = true
+                tank:takeDammage()
+                table.remove(self.bulletList, i)
+              end
+            end
+          end
+        else
+          -- Si elle sort de la map
+          self:removeBullet(i)
+        end
+      end
+    end
+  end
   
-  -- Gestion des bonus
-  function tank:addBonus(pCategory, pValue)
+  -- Appelé par bonus.lua
+  function self:addBonus(pCategory, pValue)
     if pCategory == "ammo" then
       self.ammo = self.ammo + pValue
     elseif pCategory == "dollar" then
@@ -455,8 +439,13 @@ function tank.newTank(pX, pY, pID)
       end
     end
   end
+
+  function self:handleTrail()
+    self:addTrail()
+    self:removeTrail()
+  end
   
-  function tank:addTrail()
+  function self:addTrail()
     local trail = {}
     trail.x = self.x
     trail.y = self.y
@@ -464,7 +453,7 @@ function tank.newTank(pX, pY, pID)
     table.insert(self.trailList, trail)
   end
   
-  function tank:removeTrail()
+  function self:removeTrail()
     for i=#self.trailList, trailLength, -1 do
       if i > trailLength then
         table.remove(self.trailList, 1)
@@ -472,24 +461,24 @@ function tank.newTank(pX, pY, pID)
     end
   end
   
-  function tank:addPathPoint(pX, pY)
+  function self:addPathPoint(pX, pY)
     local point = {}
-      point.x = pX
-      point.y = pY
-      point.area = 0
+    point.x = pX
+    point.y = pY
+    point.area = 0
     table.insert(self.pathPoints, point)
   end
   
-  function tank:addBullet()
+  function self:addBullet()
     local bullet = {}
-      bullet.x = self.x
-      bullet.y = self.y
-      bullet.angle = self.turret.angle
-      bullet.collide = false
+    bullet.x = self.x
+    bullet.y = self.y
+    bullet.angle = self.turret.angle
+    bullet.collide = false
     table.insert(self.bulletList, bullet)
   end
   
-  function tank:removeBullet(pID)
+  function self:removeBullet(pID)
     for i=#self.bulletList, 1, -1 do
       if i == pID then
         table.remove(self.bulletList, pID)
@@ -497,31 +486,18 @@ function tank.newTank(pX, pY, pID)
     end
   end
   
-  function tank:drawTrails()
-    -- Trace des chenilles
-    for i=1, #self.trailList do
-      love.graphics.draw(self.trailImage, self.trailList[i].x, self.trailList[i].y, math.rad(self.trailList[i].angle), 1, 1, 0, 16)
-    end
-  end
-  
-  function tank:drawPath()
-    for i=1, #self.pathPoints do
-      love.graphics.circle("line", self.pathPoints[i].x, self.pathPoints[i].y, self.pathPoints[i].area*2)
-    end
-  end
-  
-  function tank:takeDammage()
+  function self:takeDammage()
     self.life = self.life - 10
   end
-  
-  function tank:draw()
-    if tank.state == "STOP" then
+
+  function self:draw()
+    if self.state == "STOP" then
       love.graphics.draw(self.img, self.sprite[1], self.x, self.y, math.rad(self.angle), 1, 1, 16, 16)
     end
-    if tank.state == "MOVE_FORWARD" or tank.state == "SLOW" or tank.state == "SLOW" then
-      love.graphics.draw(self.img, self.sprite[math.floor(tank.imgCurrent)], self.x, self.y, math.rad(self.angle), 1, 1, 16, 16)
-    elseif tank.state == "MOVE_FORBACK" then
-      love.graphics.draw(self.img, self.sprite[math.floor(tank.imgCurrent)], self.x, self.y, math.rad(self.angle), 1, 1, 16, 16)
+    if self.state == "MOVE_FORWARD" or self.state == "SLOW" or self.state == "SLOW" then
+      love.graphics.draw(self.img, self.sprite[math.floor(self.imgCurrent)], self.x, self.y, math.rad(self.angle), 1, 1, 16, 16)
+    elseif self.state == "MOVE_FORBACK" then
+      love.graphics.draw(self.img, self.sprite[math.floor(self.imgCurrent)], self.x, self.y, math.rad(self.angle), 1, 1, 16, 16)
     end
     
     -- Obus
@@ -530,7 +506,7 @@ function tank.newTank(pX, pY, pID)
     end
     
     -- Tourelle
-    love.graphics.draw(tank.turretImg, tank.turretSpr, self.x, self.y, self.turret.angle, 1, 1, 14, 16)
+    love.graphics.draw(self.turretImg, self.turretSpr, self.x, self.y, self.turret.angle, 1, 1, 14, 16)
   
     --love.graphics.circle("line", self.passSensor.x, self.passSensor.y, 32)
   
@@ -560,8 +536,20 @@ function tank.newTank(pX, pY, pID)
       love.graphics.setColor(1, 1, 1)
     end
   end
+
+  function self:drawTrails()
+    for i=1, #self.trailList do
+      love.graphics.draw(self.trailImage, self.trailList[i].x, self.trailList[i].y, math.rad(self.trailList[i].angle), 1, 1, 0, 16)
+    end
+  end
+
+  function self:drawPath()
+    for i=1, #self.pathPoints do
+      love.graphics.circle("line", self.pathPoints[i].x, self.pathPoints[i].y, self.pathPoints[i].area*2)
+    end
+  end
   
-  function tank:drawPathDebug()
+  function self:drawPathDebug()
     local x = map.x 
     local y = map.y 
     for l=1, #self.mapCopy do
@@ -577,24 +565,21 @@ function tank.newTank(pX, pY, pID)
     end
   end
   
-  function tank:drawDebug()
+  function self:drawDebug()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("front : "..tostring(self.sensors[1].collide), 10, 30)
-    love.graphics.print("left : "..tostring(self.sensors[2].collide), 10, 50)
-    love.graphics.print("right : "..tostring(self.sensors[3].collide), 10, 70)
     love.graphics.print("x"..self.mouse.x, 10, 90)
     love.graphics.print("y"..self.mouse.y, 10, 110)
     love.graphics.print("x"..self.x, 10, 130)
     love.graphics.print("y"..self.y, 10, 150)
   end
   
-  function tank:mousepressed(x, y, btn)
+  function self:mousepressed(x, y, btn)
     if btn == 1 and self.shoot == false and self.ammo > 0 then
       self.shoot = true
     end
   end
   
-  return tank
+  return self
 end
 
 return tank
