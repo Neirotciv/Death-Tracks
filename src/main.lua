@@ -3,6 +3,7 @@ love.graphics.setDefaultFilter("nearest") -- Pixel art
 if arg[#arg] == "-debug" then require("mobdebug").start() end
 
 assetManager  = require("assetManager")
+utils         = require("utils")
 tank          = require("tank")
 map           = require("map")
 ia            = require("ia")
