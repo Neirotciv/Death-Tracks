@@ -2,6 +2,7 @@ io.stdout:setvbuf('no')
 love.graphics.setDefaultFilter("nearest") -- Pixel art
 if arg[#arg] == "-debug" then require("mobdebug").start() end
 
+viewport      = require("viewport")
 assetManager  = require("assetManager")
 utils         = require("utils")
 tank          = require("tank")
@@ -19,10 +20,11 @@ ia_list = {}
 local debugMode = false
 
 function love.load()
-  love.window.setMode(800, 600)
+  -- love.window.setMode(800, 600)
   screenWidth = love.graphics.getWidth()
   screenHeight = love.graphics.getHeight()
-  
+  viewport.init(800, 600)  
+
   assetManager:loadAssets()
 
   bonus:load()
@@ -70,6 +72,8 @@ function love.update(dt)
 end
 
 function love.draw()
+  -- viewport.start()
+
   if game.state == "MENU" then
     ui_menu:draw()
   elseif game.state == "PLAY" then
@@ -102,6 +106,8 @@ function love.draw()
   
   love.graphics.setFont(font_veryLow)
   love.graphics.print("game state : "..tostring(game.state).."\t menu state : "..tostring(game.menu_state).."\t race state : "..tostring(game.race_state), 5, screenHeight-15)
+
+  -- viewport.finish()
 end
 
 function love.keypressed(key)
@@ -132,6 +138,11 @@ function love.keypressed(key)
   if key == "b" then
     debugMode = not debugMode
     player:setDebug(debugMode)
+  end
+
+  if key == "f" then
+    fullscreen = not fullscreen
+    love.window.setFullscreen(fullscreen, "desktop")
   end
 end
 
